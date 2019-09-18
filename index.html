@@ -162,7 +162,7 @@
         <div class="setup-similar-content">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 86" class="setup-similar-wizard">
             <g class="wizard">
-              <use xlink:href="#wizard-coat" class="wizard-coat"></use>
+              <use xlink:href="#wizard-coat" class="wizard-coat" style="fill: #6589a4"></use>
               <use xlink:href="#wizard-head" class="wizard-head"></use>
               <use xlink:href="#wizard-eyes" class="wizard-eyes"></use>
               <use xlink:href="#wizard-hands" class="wizard-hands"></use>
@@ -175,16 +175,11 @@
 
     <script>
       var fireballSize = 22;
-      var left;
-      var getFireballSpeed = function(left) {
-        var fireballSpeed = 2;
-        if (left) {
-          fireballSpeed = 5;
-        }
-        return fireballSpeed;
-      }
       var wizardSpeed = 3;
       var wizardWidth = 70;
+      var getFireballSpeed = function(left) {
+        return left ? 5:2;
+      }
 
       function getWizardHeight(wizardWidth) {
         var wizardHeight = 1.337 * wizardWidth;
