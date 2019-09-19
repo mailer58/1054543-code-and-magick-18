@@ -35,9 +35,10 @@ function renderStatistics(ctx, names, times) {
     xPositionShift = (i > 0) ? (distance * i) : 0;
     ctx.fillText(names[i], xPosition + xPositionShift, 260);
     randomColor = Math.floor(Math.random() * 101);
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240, randomColor, 50)';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240, ' + (randomColor + '%') + ', 50%)';
     ctx.fillRect(xPosition + xPositionShift, 250, columnWidth, columnHeight);
     ctx.fillStyle = 'black';
     ctx.fillText(Math.floor(times[i]), xPosition + xPositionShift, 260 + columnHeight - 25);
+
   }
 }
