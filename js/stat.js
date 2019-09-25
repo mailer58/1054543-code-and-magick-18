@@ -10,11 +10,8 @@ var STATS_GAP_X = 80;
 var PLAYER_NAME_Y = 260;
 var PLAYER_NAME_GAP_Y = 10;
 var PLAYER_TIME_GAP_Y = 25;
-var maxColumnHeight = 150;
-var columnHeight;
-var columnWidth = 40;
-var statsShiftX;
-var i;
+var MAX_COLUMN_HEIGHT = 150;
+var COLUMN_WIDTH = 40;
 
 function renderCloud(ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -23,12 +20,16 @@ function renderCloud(ctx, x, y, color) {
 
 function getMaxElement(arr) {
   var maxElement = arr[0];
-  for (i = 0; i < arr.length; i++) {
+  for (var i = 0; i < arr.length; i++) {
     if (maxElement < arr[i]) {
       maxElement = arr[i];
     }
   }
   return maxElement;
+}
+
+function getRandomInteger(diapason) {
+  return Math.floor(Math.random() * diapason);
 }
 
 
@@ -47,16 +48,16 @@ window.renderStatistics = function renderStatistics(ctx, names, times) {
   ctx.fillText('Список результатов:', 150, 39);
 
   // display stats:
-  for (i = 0; i < times.length; i++) {
-    columnHeight = times[i] * maxColumnHeight / maxPlayerTime * -1;
-    statsShiftX = (i > 0) ? (STATS_GAP_X * i) : 0;
+  for (var i = 0; i < times.length; i++) {
+    var columnHeight = times[i] * MAX_COLUMN_HEIGHT / maxPlayerTime * -1;
+    var statsShiftX = (i > 0) ? (STATS_GAP_X * i) : 0;
 
     // display player name
     ctx.fillText(names[i], STATS_X + statsShiftX, PLAYER_NAME_Y);
 
     // display columns
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + Math.floor(Math.random() * 101) + '%, 50%)';
-    ctx.fillRect(STATS_X + statsShiftX, PLAYER_NAME_Y - PLAYER_NAME_GAP_Y, columnWidth, columnHeight);
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + getRandomInteger(101) + '%, 50%)';
+    ctx.fillRect(STATS_X + statsShiftX, PLAYER_NAME_Y - PLAYER_NAME_GAP_Y, COLUMN_WIDTH, columnHeight);
 
     // display time
     ctx.fillStyle = 'black';
