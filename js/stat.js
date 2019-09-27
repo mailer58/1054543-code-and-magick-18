@@ -29,7 +29,7 @@ function getMaxElement(arr) {
 }
 
 function getRandomColor(hue, saturationDiapason, lightness) {
-  var randomColor = 'hsl(' + hue + ','+ Math.floor(Math.random() * saturationDiapason) +'%,'+  lightness + '%)';
+  var randomColor = 'hsl(' + hue + ',' + Math.floor(Math.random() * saturationDiapason) + '%,' + lightness + '%)';
   return randomColor;
 }
 

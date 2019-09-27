@@ -45,14 +45,14 @@ var eyesColor = [
   'blue',
   'yellow',
   'green'
-]
+];
 
 function random(arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
 function addVariety(element, className, source) {
-element.querySelector(className).style.fill = source;
+  element.querySelector(className).style.fill = source;
 }
 
 function getnewElements(numberOfCopy, template, destination) {
@@ -71,7 +71,7 @@ userDialog.classList.remove('hidden');
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-//generation random characteristics
+// generation random characteristics
 for (var i = 0; i < WIZARD_NUMBER; i++) {
   var randomNameIndex = random(firstNames);
   var randomCoatColorIndex = random(coatColor);
@@ -82,7 +82,7 @@ for (var i = 0; i < WIZARD_NUMBER; i++) {
     eyesColor: eyesColor[randomEyesColorIndex]
   };
 
-  //avoiding of duplication
+  // avoiding of duplication
   firstNames.splice(randomNameIndex, 1);
   lastNames.splice(randomNameIndex, 1);
   coatColor.splice(randomCoatColorIndex, 1);
@@ -92,4 +92,4 @@ for (var i = 0; i < WIZARD_NUMBER; i++) {
   wizards.push(wizard);
 }
 
-getnewElements (WIZARD_NUMBER, similarWizardTemplate, similarListElement);
+getnewElements(WIZARD_NUMBER, similarWizardTemplate, similarListElement);
