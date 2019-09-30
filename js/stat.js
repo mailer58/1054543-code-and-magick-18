@@ -28,8 +28,9 @@ function getMaxElement(arr) {
   return maxElement;
 }
 
-function getRandomInteger(diapason) {
-  return Math.floor(Math.random() * diapason);
+function getRandomColor(hue, saturationDiapason, lightness) {
+  var randomColor = 'hsl(' + hue + ',' + Math.floor(Math.random() * saturationDiapason) + '%,' + lightness + '%)';
+  return randomColor;
 }
 
 
@@ -56,7 +57,7 @@ window.renderStatistics = function renderStatistics(ctx, names, times) {
     ctx.fillText(names[i], STATS_X + statsShiftX, PLAYER_NAME_Y);
 
     // display columns
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'hsl(240,' + getRandomInteger(101) + '%, 50%)';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : getRandomColor(240, 101, 50);
     ctx.fillRect(STATS_X + statsShiftX, PLAYER_NAME_Y - PLAYER_NAME_GAP_Y, COLUMN_WIDTH, columnHeight);
 
     // display time

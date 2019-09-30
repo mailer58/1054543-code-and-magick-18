@@ -64,7 +64,7 @@
     </header>
 
     <div class="overlay setup hidden">
-      <form class="setup-wizard-form" method="post" enctype="multipart/form-data" autocomplete="off">
+      <form action="https://js.dump.academy/code-and-magick" class="setup-wizard-form" method="post" enctype="multipart/form-data" autocomplete="off">
 
         <div class="setup-title">
           <div class="setup-user">
@@ -73,11 +73,11 @@
               <input type="file" name="avatar">
             </div>
             <label>
-              <input type="text" name="username" maxlength="25" required class="setup-user-name" value="Синий Пендальф" />
+              <input type="text" name="username" maxlength="25" minlength="2" required class="setup-user-name" value="Синий Пендальф" />
             </label>
           </div>
 
-          <span class="setup-close">&times;</span>
+          <span class="setup-close" tabindex="0">&times;</span>
         </div>
 
 
@@ -196,7 +196,7 @@
     </script>
 
 
-
+<script src="js/setup.js"></script>
 <script src="js/stat.js"></script>
 <script src="js/game.js"></script>
 
