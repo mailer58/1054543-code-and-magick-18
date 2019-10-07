@@ -1,13 +1,18 @@
 'use strict';
 var WIZARD_NUMBER = 4;
+<<<<<<< HEAD
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+=======
+
+>>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 var similarWizardsSetup = document.querySelector('.setup-similar');
 var setup = document.querySelector('.setup');
+<<<<<<< HEAD
 
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
@@ -23,6 +28,8 @@ var fireballColorInput = document.querySelector('.setup-wizard-form').elements['
 var coatIndex = 0;
 var eyesIndex = 0;
 var fireballIndex = 0;
+=======
+>>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 
 var firstNames = [
   'Иван',
@@ -63,6 +70,7 @@ var eyesColor = [
   'green'
 ];
 
+<<<<<<< HEAD
 var fireballColor = [
   '#ee4830',
   '#30a8ee',
@@ -71,6 +79,8 @@ var fireballColor = [
   '#e6e848'
 ];
 
+=======
+>>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 function getRandomNumber(arr) {
   return Math.floor(Math.random() * arr.length);
 }
@@ -119,6 +129,7 @@ function getCopyArray(arr) {
     copyArray[i] = arr[i];
   }
   return copyArray;
+<<<<<<< HEAD
 }
 
 function onElementClick(index, arr, element, input, action) {
@@ -229,6 +240,11 @@ userNameInput.addEventListener('invalid', function () {
 });
 
 // setup.classList.remove('hidden');
+=======
+}
+
+setup.classList.remove('hidden');
+>>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 similarWizardsSetup.classList.remove('hidden');
 
 var coatColorCopy = getCopyArray(coatColor);
