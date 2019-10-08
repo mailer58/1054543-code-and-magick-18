@@ -1,18 +1,13 @@
 'use strict';
 var WIZARD_NUMBER = 4;
-<<<<<<< HEAD
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
-=======
-
->>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 var similarWizardsSetup = document.querySelector('.setup-similar');
 var setup = document.querySelector('.setup');
-<<<<<<< HEAD
 
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
@@ -22,14 +17,12 @@ var wizardForm = document.querySelector('.setup-wizard-form');
 var wizardCoat = document.querySelector('.setup-wizard .wizard-coat');
 var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
-var coatColorInput = document.querySelector('.setup-wizard-form').elements['coat-color'];
-var eyesColorInput = document.querySelector('.setup-wizard-form').elements['eyes-color'];
-var fireballColorInput = document.querySelector('.setup-wizard-form').elements['fireball-color'];
+var coatColorsInput = wizardForm.elements['coat-color'];
+var eyesColorsInput = wizardForm.elements['eyes-color'];
+var fireballColorsInput = wizardForm.elements['fireball-color'];
 var coatIndex = 0;
 var eyesIndex = 0;
 var fireballIndex = 0;
-=======
->>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 
 var firstNames = [
   'Иван',
@@ -53,7 +46,7 @@ var lastNames = [
   'Ирвинг'
 ];
 
-var coatColor = [
+var coatColors = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -62,7 +55,7 @@ var coatColor = [
   'rgb(0, 0, 0)'
 ];
 
-var eyesColor = [
+var eyesColors = [
   'black',
   'red',
   'blue',
@@ -70,8 +63,7 @@ var eyesColor = [
   'green'
 ];
 
-<<<<<<< HEAD
-var fireballColor = [
+var fireballColors = [
   '#ee4830',
   '#30a8ee',
   '#5ce6c0',
@@ -79,8 +71,6 @@ var fireballColor = [
   '#e6e848'
 ];
 
-=======
->>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 function getRandomNumber(arr) {
   return Math.floor(Math.random() * arr.length);
 }
@@ -90,20 +80,20 @@ function generateWizards() {
   var wizards = [];
   for (var i = 0; i < WIZARD_NUMBER; i++) {
     var randomNameIndex = getRandomNumber(firstNames);
-    var randomCoatColorIndex = getRandomNumber(coatColorCopy);
-    var randomEyesColorIndex = getRandomNumber(eyesColorCopy);
+    var randomcoatColorsIndex = getRandomNumber(coatColorsCopy);
+    var randomeyesColorsIndex = getRandomNumber(eyesColorsCopy);
     var wizard = {
       name: firstNames[randomNameIndex] + ' ' + lastNames[randomNameIndex],
-      coatColor: coatColorCopy[randomCoatColorIndex],
-      eyesColor: eyesColorCopy[randomEyesColorIndex]
+      coatColors: coatColorsCopy[randomcoatColorsIndex],
+      eyesColors: eyesColorsCopy[randomeyesColorsIndex]
     };
 
     // avoiding of duplication
 
     firstNames.splice(randomNameIndex, 1);
     lastNames.splice(randomNameIndex, 1);
-    coatColorCopy.splice(randomCoatColorIndex, 1);
-    eyesColorCopy.splice(randomEyesColorIndex, 1);
+    coatColorsCopy.splice(randomcoatColorsIndex, 1);
+    eyesColorsCopy.splice(randomeyesColorsIndex, 1);
 
     // creating array of objects
     wizards[i] = wizard;
@@ -117,8 +107,8 @@ function showWizards(numberOfCopy, template, destination, arr) {
     var newElement = template.cloneNode(true);
     fragment.appendChild(newElement);
     newElement.querySelector('.setup-similar-label').textContent = arr[i].name;
-    newElement.querySelector('.wizard-coat').style.fill = arr[i].coatColor;
-    newElement.querySelector('.wizard-eyes').style.fill = arr[i].eyesColor;
+    newElement.querySelector('.wizard-coat').style.fill = arr[i].coatColors;
+    newElement.querySelector('.wizard-eyes').style.fill = arr[i].eyesColors;
   }
   destination.appendChild(fragment);
 }
@@ -129,43 +119,33 @@ function getCopyArray(arr) {
     copyArray[i] = arr[i];
   }
   return copyArray;
-<<<<<<< HEAD
 }
 
 function onElementClick(index, arr, element, input, action) {
   index++;
-  if (action === 'fill') {
-    if (index < arr.length) {
-      element.style.fill = arr[index];
-      input.value = arr[index];
-    } else {
-      element.style.fill = arr[0];
-      input.value = arr[0];
-      index = 0;
-    }
-  } else if (action === 'background-color') {
-    if (index < arr.length) {
-      element.style.background = arr[index];
-      input.value = arr[index];
-    } else {
-      element.style.background = arr[0];
-      input.value = arr[0];
-      index = 0;
-    }
+  var newIndex = index < arr.length ? index : 0;
+  switch (action) {
+    case 'fill':
+      element.style.fill = arr[newIndex];
+      break;
+    case 'background-color':
+      element.style.background = arr[newIndex];
+      break;
   }
-  return index;
+  input.value = arr[newIndex];
+  return newIndex;
 }
 
 function onCoatClick() {
-  coatIndex = onElementClick(coatIndex, coatColor, wizardCoat, coatColorInput, 'fill');
+  coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
 }
 
 function onEyesClick() {
-  eyesIndex = onElementClick(eyesIndex, eyesColor, wizardEyes, eyesColorInput, 'fill');
+  eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
 }
 
 function onFireballClick() {
-  fireballIndex = onElementClick(fireballIndex, fireballColor, wizardFireball, fireballColorInput, 'background-color');
+  fireballIndex = onElementClick(fireballIndex, fireballColors, wizardFireball, fireballColorsInput, 'background-color');
 }
 
 function onSaveButtonClick() {
@@ -179,7 +159,7 @@ function onSaveButtonPress(evt) {
 }
 
 function onPopupEscPress(evt) {
-  if (evt.keyCode === ESC_KEYCODE && event.target.className !== 'setup-user-name') {
+  if (evt.keyCode === ESC_KEYCODE && evt.target.className !== 'setup-user-name') {
     closePopup();
   }
 }
@@ -240,14 +220,9 @@ userNameInput.addEventListener('invalid', function () {
 });
 
 // setup.classList.remove('hidden');
-=======
-}
-
-setup.classList.remove('hidden');
->>>>>>> e2f16060c658a1d0ac4637a0bbcc75493472265a
 similarWizardsSetup.classList.remove('hidden');
 
-var coatColorCopy = getCopyArray(coatColor);
-var eyesColorCopy = getCopyArray(eyesColor);
+var coatColorsCopy = getCopyArray(coatColors);
+var eyesColorsCopy = getCopyArray(eyesColors);
 var wizards = generateWizards();
 showWizards(WIZARD_NUMBER, similarWizardTemplate, similarListElement, wizards);
