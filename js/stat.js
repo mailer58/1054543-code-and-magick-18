@@ -18,25 +18,9 @@ function renderCloud(ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
-function getMaxElement(arr) {
-  var maxElement = arr[0];
-  for (var i = 0; i < arr.length; i++) {
-    if (maxElement < arr[i]) {
-      maxElement = arr[i];
-    }
-  }
-  return maxElement;
-}
-
-function getRandomColor(hue, saturationDiapason, lightness) {
-  var randomColor = 'hsl(' + hue + ',' + Math.floor(Math.random() * saturationDiapason) + '%,' + lightness + '%)';
-  return randomColor;
-}
-
-
 window.renderStatistics = function renderStatistics(ctx, names, times) {
 
-  var maxPlayerTime = getMaxElement(times);
+  var maxPlayerTime = window.util.getMaxElement(times);
 
   // canvas:
   renderCloud(ctx, CLOUD_X + CLOUD_GAP, CLOUD_Y + CLOUD_GAP, 'rgba(0, 0, 0, 0.7)');
@@ -57,7 +41,7 @@ window.renderStatistics = function renderStatistics(ctx, names, times) {
     ctx.fillText(names[i], STATS_X + statsShiftX, PLAYER_NAME_Y);
 
     // display columns
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : getRandomColor(240, 101, 50);
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : window.util.getRandomColor(240, 101, 50);
     ctx.fillRect(STATS_X + statsShiftX, PLAYER_NAME_Y - PLAYER_NAME_GAP_Y, COLUMN_WIDTH, columnHeight);
 
     // display time
