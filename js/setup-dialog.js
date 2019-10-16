@@ -2,7 +2,10 @@
 (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
+  var TOP_POSITION = '80px';
+  var LEFT_POSITION = '50%';
 
+  var setup = document.querySelector('.setup');
   var wizardForm = document.querySelector('.setup-wizard-form');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = document.querySelector('.setup-close');
@@ -17,6 +20,10 @@
   var wizardCoat = document.querySelector('.setup-wizard .wizard-coat');
   var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
+  var initSetupCoords = {
+    top: TOP_POSITION,
+    left: LEFT_POSITION
+  };
 
   var fireballColors = [
     '#ee4830',
@@ -24,6 +31,23 @@
     '#5ce6c0',
     '#e848d5',
     '#e6e848'
+  ];
+
+  var eyesColors = [
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+  ];
+
+  var coatColors = [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
   ];
 
   function onSaveButtonClick() {
@@ -51,7 +75,7 @@
   }
 
   function openPopup() {
-    window.util.setup.classList.remove('hidden');
+    setup.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     saveButton.addEventListener('click', onSaveButtonClick);
     saveButton.addEventListener('keydown', onSaveButtonPress);
@@ -63,7 +87,7 @@
   }
 
   function closePopup() {
-    window.util.setup.classList.add('hidden');
+    setup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
     saveButton.removeEventListener('click', onSaveButtonClick);
     saveButton.removeEventListener('keydown', onSaveButtonPress);
@@ -72,8 +96,8 @@
     wizardFireball.removeEventListener('click', onFireballClick);
     setupClose.removeEventListener('click', onCloseButtonClick);
     setupClose.removeEventListener('keydown', onCloseButtonKeydown);
-    window.util.setup.style.top = window.util.initSetupCoords.top;
-    window.util.setup.style.left = window.util.initSetupCoords.left;
+    setup.style.top = initSetupCoords.top;
+    setup.style.left = initSetupCoords.left;
   }
 
   setupOpen.addEventListener('click', function () {
@@ -115,14 +139,68 @@
   }
 
   function onCoatClick() {
-    coatIndex = onElementClick(coatIndex, window.util.coatColors, wizardCoat, coatColorsInput, 'fill');
+    coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
   }
 
   function onEyesClick() {
-    eyesIndex = onElementClick(eyesIndex, window.util.eyesColors, wizardEyes, eyesColorsInput, 'fill');
+    eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
   }
 
   function onFireballClick() {
     fireballIndex = onElementClick(fireballIndex, fireballColors, wizardFireball, fireballColorsInput, 'background-color');
   }
+
+  var dialogHandler = setup.querySelector('.upload');
+
+  function onClickPreventDefault(evt) {
+    evt.preventDefault();
+    dialogHandler.removeEventListener('click', onClickPreventDefault);
+  }
+
+  dialogHandler.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var dragged = false;
+
+    function onMouseMove(moveEvt) {
+      moveEvt.preventDefault();
+      dragged = true;
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      setup.style.top = (setup.offsetTop - shift.y) + 'px';
+      setup.style.left = (setup.offsetLeft - shift.x) + 'px';
+
+    }
+
+    function onMouseUp(upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      if (dragged) {
+        onClickPreventDefault(evt);
+        dialogHandler.addEventListener('click', onClickPreventDefault);
+      }
+
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
 })();

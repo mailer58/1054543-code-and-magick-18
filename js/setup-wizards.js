@@ -8,6 +8,22 @@
     .querySelector('.setup-similar-item');
   var similarWizardsSetup = document.querySelector('.setup-similar');
 
+  var eyesColors = [
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+  ];
+  var coatColors = [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
+  ];
+
   var firstNames = [
     'Иван',
     'Хуан Себастьян',
@@ -68,8 +84,8 @@
     destination.appendChild(fragment);
   }
 
-  var coatColorsCopy = window.util.getCopyArray(window.util.coatColors);
-  var eyesColorsCopy = window.util.getCopyArray(window.util.eyesColors);
+  var coatColorsCopy = window.util.getCopyArray(coatColors);
+  var eyesColorsCopy = window.util.getCopyArray(eyesColors);
   var wizards = generateWizards();
   showWizards(WIZARD_NUMBER, similarWizardTemplate, similarListElement, wizards);
   // setup.classList.remove('hidden');
