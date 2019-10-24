@@ -20,6 +20,12 @@
   var wizardCoat = document.querySelector('.setup-wizard .wizard-coat');
   var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
+  var WIZARD_NUMBER = 4;
+  var similarListElement = document.querySelector('.setup-similar-list');
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template')
+    .content
+    .querySelector('.setup-similar-item');
+  var wizardsCollection = document.getElementsByClassName('setup-similar-item');
   var initSetupCoords = {
     top: TOP_POSITION,
     left: LEFT_POSITION
@@ -50,13 +56,15 @@
     'rgb(0, 0, 0)'
   ];
 
-  function onSaveButtonClick() {
-    wizardForm.submit();
+  function onSaveButtonClick(evt) {
+    evt.preventDefault();
+    window.backend.save(wizardForm, onLoad, onError);
   }
 
   function onSaveButtonPress(evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      wizardForm.submit();
+      evt.preventDefault();
+      window.backend.save(wizardForm);
     }
   }
 
@@ -74,10 +82,28 @@
     closePopup();
   }
 
+  function onLoad(response) {
+    window.showWizards(WIZARD_NUMBER, similarWizardTemplate, similarListElement, response);
+  }
+
+  function onError(errorMessage) {
+    var divError = document.getElementsByClassName('error')[0];
+    var wizardsHeader = document.querySelector('.setup-similar-title');
+    if (!divError) {
+      var div = document.createElement('div');
+      div.className = 'error';
+      div.style.textAlign = 'center';
+      wizardsHeader.after(div);
+      div.textContent = errorMessage;
+    }
+  }
+
   function openPopup() {
     setup.classList.remove('hidden');
+    window.backend.load(onLoad, onError);
+    // console.log(xhrResponse);
     document.addEventListener('keydown', onPopupEscPress);
-    saveButton.addEventListener('click', onSaveButtonClick);
+    wizardForm.addEventListener('submit', onSaveButtonClick);
     saveButton.addEventListener('keydown', onSaveButtonPress);
     wizardCoat.addEventListener('click', onCoatClick);
     wizardEyes.addEventListener('click', onEyesClick);
@@ -89,7 +115,7 @@
   function closePopup() {
     setup.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
-    saveButton.removeEventListener('click', onSaveButtonClick);
+    wizardForm.removeEventListener('submit', onSaveButtonClick);
     saveButton.removeEventListener('keydown', onSaveButtonPress);
     wizardCoat.removeEventListener('click', onCoatClick);
     wizardEyes.removeEventListener('click', onEyesClick);
@@ -98,6 +124,20 @@
     setupClose.removeEventListener('keydown', onCloseButtonKeydown);
     setup.style.top = initSetupCoords.top;
     setup.style.left = initSetupCoords.left;
+    // remove wizards:
+    while (wizardsCollection.length) {
+      wizardsCollection[0].parentNode.removeChild(wizardsCollection[0]);
+    }
+    // remove error message:
+    var errorMessage = document.getElementsByClassName('error')[0];
+    if (errorMessage) {
+      errorMessage.remove();
+    }
+    // remove loading message:
+    var loadMessage = document.getElementsByClassName('loading')[0];
+    if (loadMessage) {
+      loadMessage.remove();
+    }
   }
 
   setupOpen.addEventListener('click', function () {
