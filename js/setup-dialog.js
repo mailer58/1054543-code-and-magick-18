@@ -4,6 +4,7 @@
   var ENTER_KEYCODE = 13;
   var TOP_POSITION = '80px';
   var LEFT_POSITION = '50%';
+  var DEBOUNCE_INTERVAL = 500; // ms
 
   var setup = document.querySelector('.setup');
   var wizardForm = document.querySelector('.setup-wizard-form');
@@ -30,6 +31,7 @@
     top: TOP_POSITION,
     left: LEFT_POSITION
   };
+  var wizards = [];
 
   var fireballColors = [
     '#ee4830',
@@ -83,7 +85,44 @@
   }
 
   function onLoad(response) {
-    window.showWizards(WIZARD_NUMBER, similarWizardTemplate, similarListElement, response);
+    wizards = response;
+    window.showWizards(WIZARD_NUMBER, similarWizardTemplate, similarListElement, wizards);
+    return wizards;
+  }
+
+  function getRank(wizard) {
+    var rank = 0;
+    var eyesColor = eyesColors[eyesIndex];
+    var coatColor = coatColors[coatIndex];
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  }
+
+  function namesComparator(left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  function updateWizards() {
+    window.showWizards(WIZARD_NUMBER, similarWizardTemplate,
+        similarListElement, wizards.sort(function (left, right) {
+          var rankDiff = getRank(right) - getRank(left);
+          if (rankDiff === 0) {
+            rankDiff = namesComparator(left.name, right.name);
+          }
+          return rankDiff;
+        }));
   }
 
   function onError(errorMessage) {
@@ -101,7 +140,6 @@
   function openPopup() {
     setup.classList.remove('hidden');
     window.backend.load(onLoad, onError);
-    // console.log(xhrResponse);
     document.addEventListener('keydown', onPopupEscPress);
     wizardForm.addEventListener('submit', onSaveButtonClick);
     saveButton.addEventListener('keydown', onSaveButtonPress);
@@ -180,10 +218,12 @@
 
   function onCoatClick() {
     coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
+    window.util.debounce(updateWizards(), DEBOUNCE_INTERVAL);
   }
 
   function onEyesClick() {
     eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
+    window.util.debounce(updateWizards(), DEBOUNCE_INTERVAL);
   }
 
   function onFireballClick() {

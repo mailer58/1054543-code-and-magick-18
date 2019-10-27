@@ -2,6 +2,19 @@
 
 (function () {
   window.util = {
+    debounce: function (callback, time) {
+      var timeout;
+      return function () {
+        var args = arguments;
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(function () {
+          timeout = null;
+          callback.apply(null, args);
+        }, time);
+      };
+    },
     getRandomNumber: function (arr) {
       return Math.floor(Math.random() * arr.length);
     },

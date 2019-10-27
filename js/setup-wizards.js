@@ -2,9 +2,10 @@
 
 (function () {
   var similarWizardsSetup = document.querySelector('.setup-similar');
-
+  var similarListElement = document.querySelector('.setup-similar-list');
   window.showWizards = function (numberOfCopy, template, destination, arr) {
     var fragment = document.createDocumentFragment();
+    similarListElement.innerHTML = '';
     for (var i = 0; i < numberOfCopy; i++) {
       var newElement = template.cloneNode(true);
       fragment.appendChild(newElement);
