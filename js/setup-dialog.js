@@ -4,7 +4,6 @@
   var ENTER_KEYCODE = 13;
   var TOP_POSITION = '80px';
   var LEFT_POSITION = '50%';
-  var DEBOUNCE_INTERVAL = 500; // ms
 
   var setup = document.querySelector('.setup');
   var wizardForm = document.querySelector('.setup-wizard-form');
@@ -218,12 +217,12 @@
 
   function onCoatClick() {
     coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
-    window.util.debounce(updateWizards(), DEBOUNCE_INTERVAL);
+    window.util.debounce(updateWizards());
   }
 
   function onEyesClick() {
     eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
-    window.util.debounce(updateWizards(), DEBOUNCE_INTERVAL);
+    window.util.debounce(updateWizards());
   }
 
   function onFireballClick() {

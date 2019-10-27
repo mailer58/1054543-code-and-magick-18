@@ -1,18 +1,18 @@
 'use strict';
 
 (function () {
+  var DEBOUNCE_INTERVAL = 500;
   window.util = {
-    debounce: function (callback, time) {
-      var timeout;
+    debounce: function (func) {
+      var lastTimeout = null;
       return function () {
-        var args = arguments;
-        if (timeout) {
-          clearTimeout(timeout);
+        var parameters = arguments;
+        if (lastTimeout) {
+          window.clearTimeout(lastTimeout);
         }
-        timeout = setTimeout(function () {
-          timeout = null;
-          callback.apply(null, args);
-        }, time);
+        lastTimeout = window.setTimeout(function () {
+          func.apply(null, parameters);
+        }, DEBOUNCE_INTERVAL);
       };
     },
     getRandomNumber: function (arr) {
