@@ -143,12 +143,13 @@
     saveButton.addEventListener('keydown', onSaveButtonPress);
     wizardCoat.addEventListener('click', function () {
       coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
-      window.util.debounce(updateWizards)();
     });
+    wizardCoat.addEventListener('click', window.util.debounce(updateWizards));
     wizardEyes.addEventListener('click', function () {
       eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
-      window.util.debounce(updateWizards)();
     });
+    wizardEyes.addEventListener('click', window.util.debounce(updateWizards));
+
     wizardFireball.addEventListener('click', onFireballClick);
     setupClose.addEventListener('click', onCloseButtonClick);
     setupClose.addEventListener('keydown', onCloseButtonKeydown);
