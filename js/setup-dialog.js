@@ -99,7 +99,6 @@
     if (wizard.colorEyes === eyesColor) {
       rank += 1;
     }
-
     return rank;
   }
 
@@ -142,8 +141,14 @@
     document.addEventListener('keydown', onPopupEscPress);
     wizardForm.addEventListener('submit', onSaveButtonClick);
     saveButton.addEventListener('keydown', onSaveButtonPress);
-    wizardCoat.addEventListener('click', onCoatClick);
-    wizardEyes.addEventListener('click', onEyesClick);
+    wizardCoat.addEventListener('click', function () {
+      coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
+      window.util.debounce(updateWizards)();
+    });
+    wizardEyes.addEventListener('click', function () {
+      eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
+      window.util.debounce(updateWizards)();
+    });
     wizardFireball.addEventListener('click', onFireballClick);
     setupClose.addEventListener('click', onCloseButtonClick);
     setupClose.addEventListener('keydown', onCloseButtonKeydown);
@@ -154,7 +159,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
     wizardForm.removeEventListener('submit', onSaveButtonClick);
     saveButton.removeEventListener('keydown', onSaveButtonPress);
-    wizardCoat.removeEventListener('click', onCoatClick);
     wizardEyes.removeEventListener('click', onEyesClick);
     wizardFireball.removeEventListener('click', onFireballClick);
     setupClose.removeEventListener('click', onCloseButtonClick);
@@ -215,14 +219,8 @@
     return newIndex;
   }
 
-  function onCoatClick() {
-    coatIndex = onElementClick(coatIndex, coatColors, wizardCoat, coatColorsInput, 'fill');
-    window.util.debounce(updateWizards());
-  }
-
   function onEyesClick() {
-    eyesIndex = onElementClick(eyesIndex, eyesColors, wizardEyes, eyesColorsInput, 'fill');
-    window.util.debounce(updateWizards());
+
   }
 
   function onFireballClick() {
